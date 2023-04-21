@@ -7,7 +7,11 @@ class Card:
         self.value = value
 
     def __str__(self):
-        return f"{self.color} {self.value}"
+        color_codes = {"赤": "\033[31m", "緑": "\033[32m",
+                       "青": "\033[34m", "黄": "\033[33m"}
+        reset_code = "\033[0m"
+        card_emoji = "🃏" if self.value == "プラス2" else "🔀" if self.value == "リバース" else "⏭" if self.value == "スキップ" else self.value
+        return f"{color_codes[self.color]}{card_emoji}{reset_code}"
 
 
 class Player:
@@ -41,6 +45,10 @@ def valid_play(card1, card2):
     return card1.color == card2.color or card1.value == card2.value
 
 
+def print_separator():
+    print("-" * 40)
+
+
 def uno_game():
     players = [Player("あなた"), Player("コンピュータ1"),
                Player("コンピュータ2"), Player("コンピュータ3")]
@@ -55,9 +63,10 @@ def uno_game():
 
     while True:
         for player in players:
+            print_separator()
             print(f"{player}のターンです。")
             print(f"現在のカード: {pile[-1]}")
-            print(f"{player}の手札: {', '.join(str(card) for card in player.hand)}")
+            print(f"{player}の手札: {' '.join(str(card) for card in player.hand)}")
 
             if player.name == "あなた":
                 valid_indices = [i for i, card in enumerate(
