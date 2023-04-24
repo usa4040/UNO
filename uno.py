@@ -1,4 +1,5 @@
 import random
+import time
 
 
 class Card:
@@ -93,11 +94,14 @@ def uno_game():
                     player.draw(deck)
                     continue
 
+                time.sleep(2)
                 card_index = random.choice(valid_indices)
 
             card_played = player.play_card(card_index, deck)
             print(f"{player}が {card_played} をプレイしました。")
             pile.append(card_played)
+
+            time.sleep(2)
 
             if not player.hand:
                 print(f"{player}が勝ちました！")
